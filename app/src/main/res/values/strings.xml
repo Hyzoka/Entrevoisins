@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">Entrevoisins</string>
+    <string name="tab_neighbour_title">My neighbours</string>
+    <string name="tab_favorites_title">Favorites</string>
+    <string name="title_activity_neighbour_detail">NeighbourDetail</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="added_to_favorite_list">%s fait désormé partie des favories</string>
+    <string name="removed_from_favorite_list">%s ne fait désormé plus partie des favoris</string>
+</resources>
