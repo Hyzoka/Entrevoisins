@@ -43,7 +43,6 @@ public class DetailNeighbour extends AppCompatActivity{
     String neighbourAbout;
     NeighbourApiService mApiService;
 
-    FloatingActionButton favoritefab = findViewById(R.id.favoritefab);
 
 
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +51,7 @@ public class DetailNeighbour extends AppCompatActivity{
         ButterKnife.bind(this);
         mApiService = DI.getNeighbourApiService();
 
+        FloatingActionButton favoritefab = findViewById(R.id.favoritefab);
 
 
         //on recupère les données
