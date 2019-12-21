@@ -4,6 +4,8 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
+import com.openclassrooms.entrevoisins.ui.favorit.FavoritFragment;
+
 
 public class ListNeighbourPagerAdapter extends FragmentPagerAdapter {
 
@@ -18,8 +20,11 @@ public class ListNeighbourPagerAdapter extends FragmentPagerAdapter {
      */
     @Override
     public Fragment getItem(int position) {
+    if(position == 0){
+       return NeighbourFragment.newInstance(false);
 
-          return NeighbourFragment.newInstance(position == 1);
+}
+        return FavoritFragment.newInstance(true);
     }
 
 

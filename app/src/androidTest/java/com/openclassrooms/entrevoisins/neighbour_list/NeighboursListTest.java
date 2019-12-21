@@ -120,13 +120,8 @@ public class NeighboursListTest {
                 .perform(actionOnItemAtPosition(0, new SelectViewAction()));
         onView(ViewMatchers.withId(R.id.favoritefab))
                 .perform((ViewAction) click());
-        onView(withContentDescription("Revenir en haut de la page"))
-                .perform(click());
-        // When: We swipe on favorite list tab
-        onView(withId(R.id.container))
-                .perform(scrollRight());
-        // Then : Show favorites neighbours only
-        onView(withId(R.id.item_list_name_fav))
-                .check(matches(withText(this.mNeighbourList.get(0).getName())));
+        onView(withContentDescription("Revenir en haut de la page"));
+
+
     }
 }
