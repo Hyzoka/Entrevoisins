@@ -6,6 +6,7 @@ import android.support.test.espresso.contrib.RecyclerViewActions;
 import android.support.test.espresso.matcher.ViewMatchers;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
+import android.support.v7.widget.RecyclerView;
 
 import com.openclassrooms.entrevoisins.R;
 import com.openclassrooms.entrevoisins.model.Neighbour;
@@ -28,11 +29,13 @@ import static android.support.test.espresso.contrib.RecyclerViewActions.actionOn
 import static android.support.test.espresso.contrib.ViewPagerActions.scrollRight;
 import static android.support.test.espresso.matcher.ViewMatchers.assertThat;
 import static android.support.test.espresso.matcher.ViewMatchers.hasMinimumChildCount;
+import static android.support.test.espresso.matcher.ViewMatchers.isDescendantOfA;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withContentDescription;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
 import static com.openclassrooms.entrevoisins.utils.RecyclerViewItemCountAssertion.withItemCount;
+import static org.hamcrest.core.AllOf.allOf;
 import static org.hamcrest.core.IsNull.notNullValue;
 
 /**
@@ -110,18 +113,34 @@ public class NeighboursListTest {
                 .check(matches(withText(this.mNeighbourList.get(0).getName())));
     }
 
+
+    //ajout des deux class pour la modif de myFavoritesNeighbours_swipeAction_ShouldShowOnlyFavoritesNeighbours
+    public int checkItemInFavoriteRecyclerView(){
+        RecyclerView recyclerView = mActivityRule.getActivity().findViewById(R.id.list_favorit);
+        int favoriteItemCount = recyclerView.getAdapter().getItemCount();
+        return favoriteItemCount;
+    }
+
+    public int checkItemInNeighbourRecyclerView(){
+        RecyclerView recyclerView = mActivityRule.getActivity().findViewById(R.id.list_neighbours);
+        int neighbourItemCount = recyclerView.getAdapter().getItemCount();
+        return neighbourItemCount;
+    }
     /**
      * We ensure that only favorites items appear in favorite list
      */
     @Test
     public void myFavoritesNeighbours_swipeAction_ShouldShowOnlyFavoritesNeighbours() {
         // Given : Favorites list is not null (at least 1 item)
-        onView(withId(R.id.list_neighbours))
-                .perform(actionOnItemAtPosition(0, new SelectViewAction()));
-        onView(ViewMatchers.withId(R.id.favoritefab))
-                .perform((ViewAction) click());
-        onView(withContentDescription("Revenir en haut de la page"));
-
+        // a conplete
+        int neighbourItemCount = checkItemInNeighbourRecyclerView();
+        int favoriteItemCount = checkItemInFavoriteRecyclerView();
+        // sur le premier onglet on a la liste complète
+        onView(withId(R.id.list_neighbours)).check(withItemCount(neighbourItemCount));
+        // on click sur l'onglet pour afficher la list des neighbours favorite
+        onView(allOf(withText("Favorites"), isDescendantOfA(withId(R.id.tabs)))).perform(click());
+        // on retrouve que les favorit (3)
+        onView(withId(R.id.list_favorit)).check(withItemCount(favoriteItemCount));
 
     }
 }

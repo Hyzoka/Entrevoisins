@@ -2,17 +2,13 @@ package com.openclassrooms.entrevoisins.ui.neighbour_list;
 
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.text.method.ScrollingMovementMethod;
-import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.Toolbar;
 
 import com.bumptech.glide.Glide;
 import com.openclassrooms.entrevoisins.R;
@@ -33,8 +29,8 @@ public class DetailNeighbour extends AppCompatActivity{
     @BindView(R.id.neighbourPhone) TextView mneighbourPhone;
     @BindView(R.id.neighbourFacebook) TextView mneighbourFacebook;
     @BindView(R.id.Aboutme) TextView mneighbourAbout;
+    @BindView(R.id.back_home) ImageView backHome;
 
-    Integer neighbourId;
     String neighbourName;
     String neighbourPicture;
     String neighbourAddress;
@@ -59,7 +55,6 @@ public class DetailNeighbour extends AppCompatActivity{
         int neighbourId = intent.getIntExtra("neighbourId",-1);
         Neighbour neighbour = mApiService.getNeighbourById(neighbourId);
 
-        neighbourId = neighbour.getId();
         neighbourName = neighbour.getName();
         neighbourPicture = neighbour.getAvatarUrl();
         neighbourAddress = neighbour.getAddress();
@@ -68,6 +63,10 @@ public class DetailNeighbour extends AppCompatActivity{
         neighbourAbout = neighbour.getAbout();
 
         setNeighbourDetail(neighbourName, neighbourPicture, neighbourName, neighbourAddress, neighbourPhone, neighbourFacebook, neighbourAbout);
+
+        backHome.setOnClickListener(view -> {
+           finish();
+        });
 
         if (!mApiService.getNeighbourFavorit().contains(neighbour)) {
             favoritefab.setImageResource(R.drawable.ic_star_border_yellorange_24dp);
@@ -89,6 +88,8 @@ public class DetailNeighbour extends AppCompatActivity{
             }
         });
     }
+
+
 
     private void setNeighbourDetail(String neighbourName, String neighbourPic, String neighbourDetailName, String neighbourPlace, String neighbourPhone, String neighbourFacebook, String neighbourAbout){
 
